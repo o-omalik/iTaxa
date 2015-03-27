@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+
+<!--
+     This is a blank Tiles definition file with a commented example.
+-->
+
+<tiles-definitions>
+
+    <definition name="itaxa.template" path="/layout/layout.jsp">
+        <put name="header" value="/layout/header.jsp" />
+        <put name="menu"   value="/menu.do" />
+        <put name="submenu" value="/layout/submenu.jsp"/>
+        <put name="footer" value="/layout/footer.jsp" />
+    </definition>
+    <definition name="itaxa.logon" extends="itaxa.template">
+        <put name="title"  value="iTaxa" />
+        <put name="body"   value="/layout/logon.jsp" />
+    </definition >
+    <definition name="itaxa.index" extends="itaxa.template">
+        <put name="title"  value="iTaxa" />
+        <put name="body"   value="/layout/body.jsp" />
+    </definition >
+    
+    <definition name="itaxa.employee" extends="itaxa.template">
+        <put name="title" value="Employee"/>
+        <put name="body" value="/jsp/employee.jsp"/>        
+    </definition>
+     <definition name="itaxa.employeeForm" extends="itaxa.template">
+        <put name="title" value="Register Employee"/>
+        <put name="body" value="/jsp/employeeForm.jsp"/>        
+    </definition>
+    <definition name="itaxa.vogn" extends="itaxa.template">
+        <put name="title" value="Register Vogn"/>
+        <put name="body" value="/jsp/vogn.jsp"/>        
+    </definition>
+    <definition name="itaxa.vognForm" extends="itaxa.template">
+        <put name="title" value="Register VognForm"/>
+        <put name="body" value="/jsp/vognForm.jsp"/>        
+    </definition>
+    <definition name="itaxa.trafikbook" extends="itaxa.template">
+        <put name="title" value="Register Trafikbook"/>
+        <put name="body" value="/jsp/trafikbook.jsp"/>        
+    </definition>
+    <definition name="itaxa.skattekort" extends="itaxa.template">
+        <put name ="title" value="Register Skattekort"/>
+        <put name="body" value="/jsp/skattekort.jsp"/>
+    </definition>
+    <definition name="itaxa.payslip" extends="itaxa.template">
+        <put name ="title" value="Payslip"/>
+        <put name="body" value="/jsp/payslip.jsp"/>
+    </definition>
+    <definition name="itaxa.showTrafikbook" extends="itaxa.template">
+        <put name ="title" value="Drvier Trafikbook"/>
+        <put name="body" value="/jsp/showTrafikbook.jsp"/>
+    </definition>
+</tiles-definitions>

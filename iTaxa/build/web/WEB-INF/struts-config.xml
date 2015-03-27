@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="UserForm" type="com.itaxa.forms.UserForm"/>
+        <form-bean name="PayslipForm" type="com.itaxa.forms.PayslipForm"/>
+        <form-bean name="SkatteKortForm" type="com.itaxa.forms.SkatteKortForm"/>
+        <form-bean name="TrafikbookForm" type="com.itaxa.forms.TrafikbookForm"/>
+        <form-bean name="VognForm" type="com.itaxa.forms.VognForm"/>
+        <form-bean name="EmployeeForm" type="com.itaxa.forms.EmployeeForm"/>
+    </form-beans>
+    <global-exceptions>
+    </global-exceptions>
+    <global-forwards>
+        <forward name="logon"  path="/logon.do"/>
+    </global-forwards>
+    <action-mappings>
+        <!--Logon-->
+        <action path="/logon"
+                name="UserForm"
+                scope="session" 
+                input="itaxa.logon"
+                parameter="dispatch"
+                validate="true"
+                type="com.itaxa.actions.LogonAction">
+            <forward name="logon" path="itaxa.index" />
+            <forward name="error" path="itaxa.error"/>
+            <forward name="welcome" path="itaxa.logon"/>
+        </action>
+        <!--logoff-->
+         <action   path="/logoff" 
+                  type="com.itaxa.actions.LogoffAction"
+                  parameter="dispatch">
+                  <forward name="welcome" path="itaxa.logon"/>
+                  </action>
+        <!--Menu-->
+        <action path="/menu" 
+                type="com.itaxa.actions.MenuAction"
+                >
+            <forward name="menu" path="/layout/menu.jsp"/>
+        </action>
+        
+        <!--Retrive employee list-->
+        <action path="/employee"
+                name="EmployeeForm"
+                scope="request"
+                parameter="dispatch"
+                type="com.itaxa.actions.EmployeeAction">
+            <forward name="list"  path="itaxa.employee"/>
+        </action>
+        
+        <!--Register employee form-->
+        <action path="/employeeForm" 
+                name="EmployeeForm"
+                input="itaxa.employeeForm"
+                scope="request" 
+                parameter="dispatch"
+                validate="true"
+                type="com.itaxa.actions.EmployeeAction">
+            <forward name="form" path="itaxa.employeeForm"/>
+            <forward name="list" path="itaxa.employee"/>
+        </action>
+        <action path="/vogn"
+                name="VognForm"
+                input="itaxa.vogn"
+                scope="request"
+                parameter="dispatch"
+                type="com.itaxa.actions.VognAction">
+            <forward name="list" path="itaxa.vogn"/>
+        </action>
+        <action path="/vognForm"
+                name="VognForm"
+                input="itaxa.vognForm"
+                scope="request" 
+                parameter="dispatch"
+                validate="true"
+                type="com.itaxa.actions.VognAction">
+            <forward name="form" path="itaxa.vognForm"/>
+            <forward name="list" path="itaxa.vogn"/>
+        </action>
+       <action path="/trafikbook"
+                name="TrafikbookForm"
+                scope="session" 
+                input="itaxa.trafikbook"
+                parameter="dispatch"   
+                type="com.itaxa.actions.TrafikbookAction">
+            <forward name="list" path="itaxa.trafikbook"/>
+        </action>
+        <action path="/skattekort" 
+                name="SkatteKortForm" 
+                scope="session" 
+                input="itaxa.skattekort" 
+                parameter="dispatch" 
+                type="com.itaxa.actions.SkatteKortAction">
+            <forward name="list" path="itaxa.skattekort"/>
+        </action>
+        <action path="/payslip" 
+                name="PayslipForm" 
+                scope="request" 
+                input="itaxa.payslip" 
+                parameter="dispatch" 
+                type="com.itaxa.actions.PayslipAction">
+            <forward name="list" path="itaxa.payslip"/>
+        </action>
+        <action path="/showTrafikbook"
+                name="TrafikbookForm"
+                parameter="dispatch"
+                scope="request"
+                type="com.itaxa.actions.ShowTrafikbookAction">
+            <forward name ="list" path="itaxa.showTrafikbook"/>
+       </action>
+    </action-mappings>
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+    <message-resources parameter="com/itaxa/struts/ApplicationResource"/>
+    
+    <!-- ========================= Tiles plugin ===============================-->
+    <!--
+    This plugin initialize Tiles definition factory. This later can takes some
+    parameters explained here after. The plugin first read parameters from
+    web.xml, thenoverload them with parameters defined here. All parameters
+    are optional.
+    The plugin should be declared in each struts-config file.
+    - definitions-config: (optional)
+    Specify configuration file names. There can be several comma
+    separated file names (default: ?? )
+    - moduleAware: (optional - struts1.1)
+    Specify if the Tiles definition factory is module aware. If true
+    (default), there will be one factory for each Struts module.
+    If false, there will be one common factory for all module. In this
+    later case, it is still needed to declare one plugin per module.
+    The factory will be initialized with parameters found in the first
+    initialized plugin (generally the one associated with the default
+    module).
+    true : One factory per module. (default)
+    false : one single shared factory for all modules
+    - definitions-parser-validate: (optional)
+    Specify if xml parser should validate the Tiles configuration file.
+    true : validate. DTD should be specified in file header (default)
+    false : no validation
+
+    Paths found in Tiles definitions are relative to the main context.
+    -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames"
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+     <!-- ========================= Validator plugin ================================= -->
+
+</struts-config>

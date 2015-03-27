@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+        PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+        "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+     <properties resource = "com/itaxa/struts/ibatis.properties" />
+    <!-- there are plenty of other optional settings, see the ibatis-sql-maps doc -->
+    <settings
+            enhancementEnabled="true"
+            useStatementNamespaces="true"
+            
+            />
+
+  <!--  <transactionManager type="JDBC">
+        <dataSource type="SIMPLE">
+            <property name="JDBC.Driver" value="${driver}"/>
+            <property name="JDBC.ConnectionURL" value="${url}"/>
+            <property name="JDBC.Username" value="${user}"/>
+            <property name="JDBC.Password" value="${password}"/>
+        </dataSource>
+    </transactionManager>-->
+ <transactionManager type ="JDBC">
+        <dataSource type="JNDI">
+            <property name="DataSource" value="jdbc/iTaxa"/>
+        </dataSource>
+    </transactionManager>
+    <sqlMap resource="com/itaxa/ibatis/Employee.xml"/>
+    <sqlMap resource="com/itaxa/ibatis/Vogn.xml"/>
+    <sqlMap resource="com/itaxa/ibatis/Trafikbook.xml"/>
+    <sqlMap resource="com/itaxa/ibatis/SkatteKort.xml"/>
+    <sqlMap resource="com/itaxa/ibatis/Payslip.xml"/>
+    <sqlMap resource="com/itaxa/ibatis/User.xml"/>
+</sqlMapConfig>

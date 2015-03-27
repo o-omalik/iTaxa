@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--
+    Document   : SkatteKort.xml
+    Created on : November 9, 2008, 1:41 PM
+    Author     : adnan
+    Description:
+        Purpose of the document follows.
+-->
+
+<sqlMap namespace="SkatteKort">
+    <typeAlias alias="SkatteKort" type="com.itaxa.beans.SkatteKort"/>
+    
+    <resultMap id="skattekortResult" class="SkatteKort">
+        <result property="id" column="id"/>
+        <result property="fradrag" column="fradrag"/>
+        <result property="procent" column="procent"/>
+        <result property="aktivedate" column="aktivedate"/>
+        <result property="expiredate" column="expiredate"/>
+        <result property="employee.employeeId" column="employeeid"/>
+        <result property="employee.name" column="name"/>
+    </resultMap>
+    <select id="getAll" resultMap="skattekortResult">
+        SELECT id, fradrag, procent, aktivedate, expiredate, employee.employeeid, employee.name
+            FROM SKATTEKORT, EMPLOYEE
+            WHERE skattekort.employeeid = employee.employeeid 
+    </select>
+    <!-- get skattekort by id -->
+    <select id="getById" resultMap="skattekortResult" parameterClass="java.lang.Integer">
+        SELECT id, fradrag, procent, aktivedate, expiredate, employee.employeeid, employee.name
+            FROM SKATTEKORT, EMPLOYEE
+            WHERE employee.employeeid = skattekort.employeeid AND skattekort.employeeid = #value#
+    </select>
+    <!--Insert skattekort -->
+    <insert id="insert" parameterClass="SkatteKort">
+        INSERT INTO SKATTEKORT(fradrag, procent, aktivedate, expiredate, employeeid)
+        VALUES(#fradrag#, #procent#, #aktivedate#, #expiredate#, #employee.employeeId#)
+    </insert>
+   <!--update skattekort-->
+   <update id="update" parameterClass="SkatteKort">
+       UPDATE SKATTEKORT SET
+       fradrag = #fradrag#,
+       procent = #procent#,
+       aktivedate = #aktivedate#,
+       expiredate = #expiredate#,
+       employeeid = #employee.employeeId#
+       WHERE skattekort.id = #id#
+   </update>
+   <!--delete skattekort-->
+   <delete id="delete" parameterClass="java.lang.Integer">
+     DELETE FROM SKATTEKORT WHERE id = #id#  
+   </delete>
+</sqlMap>

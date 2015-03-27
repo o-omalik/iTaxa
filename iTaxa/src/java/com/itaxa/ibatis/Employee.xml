@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Employee">
+    
+    <typeAlias alias="Employee" type="com.itaxa.beans.Employee"/> 
+    
+    <resultMap id="employeeResult" class="Employee">
+        <result property="employeeId" column="employeeid"/>
+        <result property="name" column="name"/>
+        <result property="cprNr" column="cprnr"/>
+        <result property="street" column ="street"/>
+        <result property="city" column="city"/>
+        <result property="post" column="post"/>
+        <result property="phone" column="phone"/>
+        <result property="licNr" column="licnr"/>
+        <result property="password" column="password"/>
+        <result property="role" column="role"/>
+    </resultMap>
+
+    <!-- hsql db used for this example capitalizes col names
+         so Map will have them as all caps -->
+    <select id="getAll" resultMap="employeeResult">
+        SELECT employeeid, name, cprnr, street, city, post, phone, licnr, password, role
+        FROM EMPLOYEE
+    </select>
+    <select id="getById" resultMap="employeeResult" parameterClass="java.lang.Integer">
+        SELECT employeeid, name, cprnr, street, city, post, phone, licnr, password, role
+        FROM EMPLOYEE
+        WHERE employeeid = #value#
+    </select>
+    <update id="update" parameterClass="Employee">
+        UPDATE EMPLOYEE SET
+        name = #name#,
+        cprnr = #cprNr#,
+        street = #street#,
+        city = #city#,
+        post = #post#,
+        phone = #phone#,
+        licnr = #licNr#,
+        password = #password#,
+        role = #role#
+        WHERE employeeid = #employeeId#
+    </update>
+    <insert id="insert" parameterClass="Employee">
+        INSERT INTO EMPLOYEE (name, cprnr, street, city, post, phone, licnr, password, role)
+        VALUES ( #name#, #cprNr#, #street#, #city#, #post#, #phone#, #licNr#, #password#, #role#)
+    </insert>
+    <delete id="delete" parameterClass="java.lang.Integer">
+        DELETE FROM EMPLOYEE WHERE employeeid = #value#
+    </delete>
+</sqlMap>

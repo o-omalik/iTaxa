@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Vogn">
+    <typeAlias type="com.itaxa.beans.Vogn" alias="Vogn"/>
+    
+    <resultMap id="vognResult" class="Vogn">
+        <result property="vognId" column="vognid"/>
+        <result property="bevNr" column="bevnr"/>
+        <result property="regNr" column="regnr"/>
+        <result property="model" column ="model"/>
+        <result property="pyear" column="pyear"/>
+    </resultMap>
+    
+    <select id="getAll" resultMap="vognResult">
+        SELECT vognid, bevnr, regnr, model, pyear
+        FROM VOGN
+    </select>
+    <select id="getById" resultMap="vognResult" parameterClass="java.lang.Integer">
+        SELECT vognid, bevnr, regnr, model, pyear
+        FROM VOGN
+        WHERE vognid = #value#
+    </select>
+    <update id="update" parameterClass="Vogn">
+        UPDATE VOGN SET
+        bevnr = #bevNr#,
+        regnr = #regNr#,
+        pyear = #pyear#,
+        model = #model#
+        WHERE vognid = #vognId#
+    </update>
+        <insert id="insert" parameterClass="Vogn">
+        INSERT INTO VOGN (bevnr, regnr, pyear, model)
+        VALUES (#bevNr#, #regNr#, #pyear#, #model#)
+    </insert>
+    <delete id="delete" parameterClass="java.lang.Integer">
+        DELETE FROM VOGN WHERE vognid = #value#
+    </delete>
+</sqlMap>

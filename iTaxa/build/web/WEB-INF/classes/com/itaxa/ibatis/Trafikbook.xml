@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--
+    Document   : Trafikbook.xml
+    Created on : October 9, 2008, 6:15 PM
+    Author     : adnan
+    Description:
+        Purpose of the document follows.
+-->
+
+<sqlMap namespace="Trafikbook">
+    
+    <typeAlias alias="Trafikbook" type="com.itaxa.beans.Trafikbook"/>
+    
+    <resultMap id="trafikbookResult" class="Trafikbook">
+        <result property="bogId" column="bogid"/>
+        <result property="date" column="date"/>
+        <result property="hours" column="hours"/>
+        <result property="enheder" column="enheder"/>
+        <result property="tours" column="tours"/>
+        <result property="km"   column="km"/>
+        <result property="credit" column="credit"/>
+        <result property="cash" column="cash"/>
+        <result property="diverse" column="diverse"/>
+        <result property="akonto" column="akonto"/>
+        <result property="employee.employeeId" column="employeeid"/>
+        <result property="employee.name" column="name"/>
+        <result property="vogn.vognId" column="vognid"/>
+        <result property="vogn.bevNr" column="bevnr"/>
+    </resultMap>
+     <resultMap id="trafikbookSearch" class="Trafikbook">
+        <result property="bogId" column="bogid"/>
+        <result property="date" column="date"/>
+        <result property="hours" column="hours"/>
+        <result property="enheder" column="enheder"/>
+        <result property="tours" column="tours"/>
+        <result property="km"   column="km"/>
+        <result property="credit" column="credit"/>
+        <result property="cash" column="cash"/>
+        <result property="diverse" column="diverse"/>
+        <result property="akonto" column="akonto"/>
+        <result property="employee.employeeId" column="employeeid"/>
+        <result property="employee.name" column="name"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="trafikbookResult">
+        SELECT bogid, date, hours, enheder, tours, km, credit, cash, diverse, akonto, employee.employeeid, employee.name, vogn.vognId, vogn.bevnr
+               FROM TRAFIKBOOK, EMPLOYEE, VOGN
+               WHERE trafikbook.employeeid = employee.employeeid AND trafikbook.vognid = vogn.vognid                          
+               
+    </select>
+    <!-- get boook id -->
+    <select id="getById" resultMap="trafikbookResult" parameterClass="java.lang.Integer"> 
+    SELECT bogid, date, hours, enheder, tours, km, credit, cash, diverse, akonto, employee.employeeid, employee.name, vogn.vognid, vogn.bevnr
+    FROM trafikbook, employee, vogn
+    WHERE employee.employeeid = trafikbook.employeeid AND vogn.vognid = trafikbook.vognId AND bogid = #value#
+    </select>
+    <!--Insert vlaues into Trafikbook-->
+    <insert id="insert" parameterClass="Trafikbook">
+        INSERT INTO TRAFIKBOOK (date, hours, enheder, tours, km, credit, cash, diverse, akonto, employeeid, vognid)
+        VALUES(#date#, #hours#, #enheder#, #tours#, #km#, #credit#, #cash#, #diverse#, #akonto#, #employee.employeeId#, #vogn.vognId#)
+    </insert>
+    <update id="update" parameterClass="Trafikbook">
+       UPDATE trafikbook SET 
+        date = #date#,
+        hours = #hours#,
+        enheder = #enheder#,
+        tours = #tours#,
+        km = #km#,
+        credit = #credit#,
+        cash = #cash#,
+        diverse = #diverse#,
+        akonto = #akonto#,
+        employeeid = #employee.employeeId#,
+        vognid = #vogn.vognId#
+        WHERE bogid = #bogId#
+    </update>
+    <delete id="delete" parameterClass="java.lang.Integer">
+        DELETE FROM trafikbook where bogid = #value#
+    </delete>
+    <select id="searchByDriver" resultMap="trafikbookSearch" parameterClass="com.itaxa.beans.Trafikbook">
+        SELECT bogid, date, hours, enheder, tours, km, credit, cash, diverse, akonto, employee.employeeid, employee.name FROM
+        TRAFIKBOOK, EMPLOYEE WHERE trafikbook.employeeid=employee.employeeid AND trafikbook.employeeid = #employee.employeeId#
+        AND date BETWEEN #fromDate# AND #toDate#
+    </select>
+</sqlMap>
+

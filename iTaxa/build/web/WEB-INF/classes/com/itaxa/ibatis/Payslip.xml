@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Payslip">    
+    <typeAlias alias="Payslip" type="com.itaxa.beans.Payslip"/> 
+   <resultMap id="payslipResult" class="Payslip">        
+        <result property="id" column="pid"/>
+        <result property="period" column="period"/>
+        <result property="indkoert" column="indkoert"/>
+        <result property="atp" column="atp"/>
+        <result property="amBidrag" column="ambidrag"/>
+        <result property="askat" column="askat"/>
+        <result property="totalPay" column="totalpay"/>
+        <result property="employee.employeeId" column="peid"/>
+        <result property="skattekort.id" column="pskid"/>
+    </resultMap>
+ <select id="getByEmpId" resultMap="payslipResult" parameterClass="Payslip">
+     SELECT
+            pid, period, indkoert, atp, ambidrag, askat, totalpay, employee.employeeid, employee.name, 
+            skattekort.id, skattekort.fradrag, skattekort.procent
+            FROM SKATTEKORT, EMPLOYEE, PAYSLIP
+            WHERE  payslip.peid = employee.employeeid  AND period = #period# AND payslip.peid = #employee.employeeId#
+    </select> 
+    <select id="getTotal"  resultClass="java.lang.Double" parameterClass="Payslip"> 
+         SELECT SUM(enheder) FROM TRAFIKBOOK WHERE EMPLOYEEID = #employee.employeeId# AND MONTH(date) = #period# 
+    </select> 
+    
+    <insert id="insert" parameterClass="Payslip">
+        INSERT INTO PAYSLIP (period, indkoert, atp, ambidrag, askat, totalpay, peid, pskid) 
+                    VALUES (#period#, #indkoert#, #atp#, #amBidrag#, #askat#, #totalPay#, #employee.employeeId#, #skattekort.id#)
+    </insert>
+    
+    <update id="update" parameterClass="Payslip">
+        UPDATE PAYLSIP SET 
+                    period = #period#, 
+                    indkoert = #indkoert#, 
+                    atp = #atp#, 
+                    ambidrag = #amBidrag#, 
+                    askat = #askat#, 
+                    totalpay = #totalPay#, 
+                    payslip.peid = #employee.employeeId#, 
+                    payslip.pskid = #skattekort.id#
+                    WHERE id = #id#
+    </update>
+    
+     <delete id="delete" parameterClass="java.lang.Integer">
+     DELETE FROM SKATTEKORT WHERE ID = #id#  
+   </delete>
+   </sqlMap>
