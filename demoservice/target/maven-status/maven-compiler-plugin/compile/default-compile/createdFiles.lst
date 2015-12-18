@@ -1,0 +1,7 @@
+org/nordea/vdc/ninja/service/DemoServiceServer.class
+org/nordea/vdc/ninja/service/Client.class
+org/nordea/vdc/ninja/service/Service.class
+org/nordea/vdc/ninja/service/Dependency.class
+org/nordea/vdc/ninja/service/ServiceRepository.class
+org/nordea/vdc/ninja/service/ServiceException.class
+org/nordea/vdc/ninja/service/DemoServiceController.class
